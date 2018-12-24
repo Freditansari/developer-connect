@@ -7,14 +7,14 @@ const profiles = require('./routes/api/profiles');
 const posts = require('./routes/api/posts');
 
 const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({extended:false, useNewUrlParser: true}));
 app.use(bodyParser.json());
 
 
 
 const db = require('./config/keys').mongoUri;
 
-mongoose.connect(db)
+mongoose.connect(db, { useNewUrlParser: true })
 .then(()=>console.log('connected to mongodb server'))
 .catch(err=>console.log(err));
  
