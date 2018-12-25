@@ -32,7 +32,9 @@ router.post('/register', (req, res)=> {
                 password:  req.body.password
             });
 
-            bcrypt.genSalt(10, (err, salt)=>{bcrypt.hash(newUser.password, salt, (err, hash)=>{
+            bcrypt.genSalt(10, (err, salt)=>{
+                console.log(salt);
+                bcrypt.hash(newUser.password, salt, (err, hash)=>{
                 if(err) throw error;
                 newUser.password = hash;
                 newUser.save()
@@ -42,6 +44,37 @@ router.post('/register', (req, res)=> {
 
         }
     });
+
+//@route post api/users/login
+//@desc login user and returns jwt token
+//@access public
+
+router.post('/login', (req, res)=>{
+   
+    const email = req.body.email;
+    const password = req.body.password;
+
+    User.findOne({email}).then(user=>{
+        if(!user){
+            return res.status(404).json({email: 'User not found'});
+        }
+
+        //match password
+        bcrypt.compare(password, user.password)
+        .then(isMatch =>{
+            if (isMatch){
+
+                //return jwt here
+                res.json({msg: 'Success'});
+            }else{
+                return res.status(400).json({password: ' incorrect password'});
+            }
+        });
+    })
+
+
+})
+
 })
 
 
