@@ -8,6 +8,13 @@ const keys = require('../../config/keys')
 
 const jwt= require('jsonwebtoken');
 
+const passport = require ('passport');
+
+//load input validation
+const validateRegisterInput = require('../../validation/register')
+
+const validateLoginInput = require('../../validation/login')
+
 //@route GET api/users/test
 //@desc tests users router
 //@access public
@@ -18,8 +25,31 @@ router.get('/test', (req, res)=> res.json({msg : "users works"}));
 //@access public
 
 router.post('/register', (req, res)=> {
+
+    /**validate register input is a method located in validation register.js file. 
+     * this method is used to perform a check for the fields pertaining to the register API 
+     */
+    const { errors, isValid}= validateRegisterInput(req.body);
+    
+
+    /** it checks the validation results from the validateRegisterInput Method. 
+     * if it fails return a 400 along with the errors variable message from the register.js
+     * else continues
+    */
+    if(!isValid){
+        return res.status(400).json(errors)
+    }
+
     User.findOne({ email : req.body.email})
-    .then(user =>{ 
+    .then(user =>{
+        /**
+         * on these lines, basically after mongoose findOne if the user variable is empty, 
+         * then the user returns 400 error with email already exist message. 
+         * 
+         * else 
+         * 
+         * they setup a new User(as per User model for mongoose). and then encrypt the password 
+         * using bcrypt method.  */ 
         if(user){
             return res.status(400).json({email: 'Email already exists'})
         }else {
@@ -36,7 +66,7 @@ router.post('/register', (req, res)=> {
             });
 
             bcrypt.genSalt(10, (err, salt)=>{
-                console.log(salt);
+             
                 bcrypt.hash(newUser.password, salt, (err, hash)=>{
                 if(err) throw error;
                 newUser.password = hash;
@@ -54,6 +84,14 @@ router.post('/register', (req, res)=> {
 //@access public
 
 router.post('/login', (req, res)=>{
+
+    const { errors, isValid}= validateLoginInput(req.body);
+    
+
+    //check validation
+    if(!isValid){
+        return res.status(400).json(errors)
+    }
    
    
     const email = req.body.email;
@@ -61,7 +99,8 @@ router.post('/login', (req, res)=>{
 
     User.findOne({email}).then(user=>{
         if(!user){
-            return res.status(404).json({email: 'User not found'});
+            errors.email = 'User not found'
+            return res.status(404).json(errors);
         }
 
         //match password
@@ -89,7 +128,8 @@ router.post('/login', (req, res)=>{
                 //return jwt here
                 //  res.json({msg: 'Success'});
             }else{
-                return res.status(400).json({password: ' incorrect password'});
+                errors.password = 'password incorrect'
+                return res.status(400).json(errors);
             }
         });
     })
@@ -97,6 +137,20 @@ router.post('/login', (req, res)=>{
 
 });
 
+
+//@route post api/users/current
+//@desc returns current user 
+//@access private
+
+
+router.get('/current', passport.authenticate('jwt', {session: false}), (req, res)=>{
+    res.json({
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email
+    });
+
+});
 
 
 
