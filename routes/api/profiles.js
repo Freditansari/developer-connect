@@ -15,7 +15,64 @@ const ValidateProfileInput = require('../../validation/profile')
 router.get('/test', (req, res)=> res.json({msg : "profile works"}));
 
 
-//@route get api/profiles/
+//@route get api/profiles/handle/:handle
+//@desc get profile by handle
+//@access public
+
+router.get('/handle/:handle',(req, res)=>{
+    const errors={};
+    //getting a url parameter using req.params.handle
+    Profile.findOne({handle: req.params.handle})
+    .populate('user', ['name', 'avatar'])
+    .then(profile => {
+        if(!profile){
+            errors.noprofile = 'there is no profile associated to this user';
+            res.status(404).json(errors);
+        }
+        res.json(profile);
+    }).catch(err => res.status(404).json(err));
+});
+
+//@route get api/profile/all
+//@desc get all profile
+//@access public
+
+router.get('/all',(req, res)=>{
+    const errors={};
+    //getting a url parameter using req.params.handle
+    Profile.find()
+    .populate('user', ['name', 'avatar'])
+    .then(profiles => {
+        if (!profiles) {
+            errors.noprofile = 'there are no profiles';
+            res.status(404).json(errors);  
+        }
+        res.json(profiles)
+    })
+    .catch(err => res.status(404).json(err));
+});
+
+
+//@route get api/profile/id/:user_id
+//@desc get profile by id
+//@access public
+
+router.get('/id/:user_id',(req, res)=>{
+    const errors={};
+    //getting a url parameter using req.params.handle
+    Profile.findOne({_id: req.params.user_id})
+    .populate('user', ['name', 'avatar'])
+    .then(profile => {
+        if(!profile){
+            errors.noprofile = 'there is no id associated to this user';
+            res.status(404).json(errors);
+        }
+        res.json(profile);
+    }).catch(err => res.status(404).json(err));
+});
+
+
+//@route get api/profile/
 //@desc returns current user profile
 //@access private
 
@@ -36,7 +93,7 @@ router.get('/',  passport.authenticate('jwt', {session: false}), (req, res)=>{
 
 });
 
-//@route post api/profiles/
+//@route post api/profile/
 //@desc create or edit user profile
 //@access private
 
