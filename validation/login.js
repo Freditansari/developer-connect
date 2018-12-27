@@ -11,11 +11,6 @@ module.exports= function validateLoginInput(data){
     data.password = !isEmpty(data.password) ? data.password: '';
     
 
-
-
-
-
-
     if(validator.isEmpty(data.email)){
         errors.email = 'email is required';
     }
