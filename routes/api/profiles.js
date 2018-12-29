@@ -9,7 +9,8 @@ const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 
 const ValidateProfileInput = require('../../validation/profile');
-const ValidateExperienceInput = require('../../validation/experience')
+const ValidateExperienceInput = require('../../validation/experience');
+const ValidateEducationInput = require('../../validation/education');
 
 
 
@@ -184,18 +185,50 @@ router.post('/',  passport.authenticate('jwt', {session: false}), (req, res)=>{
             const newExp = {
                 title: req.body.title,
                 company : req.body.company,
-                locaion: req.body.location, 
+                location: req.body.location, 
                 from: req.body.from,
                 to: req.body.to,
                 current: req.body.current, 
                 description: req.body.description
             }
 
-            //add to experience array
+            //add to experience array to the top of the lists
             profile.experience.unshift(newExp);
             profile.save().then(profile=>res.json(profile));
         });
     });
+
+    //@route post api/profile/education
+    //@desc create education to profile
+    //@access private
+
+    router.post('/education',passport.authenticate('jwt', {session: false}), (req, res) =>{
+
+        const { errors, isValid}= ValidateEducationInput(req.body);
+
+        if(!isValid){
+            return res.status(400).json(errors)
+        }
+
+        Profile.findOne({user: req.user.id})
+        .then(profile => {
+            const newEdu = {
+                school: req.body.school,
+                degree : req.body.degree,
+                fieldOfStudy: req.body.fieldOfStudy, 
+                from: req.body.from,
+                to: req.body.to,
+                current: req.body.current, 
+                description: req.body.description
+            }
+
+            //add to experience array to the top of the lists
+            profile.education.unshift(newEdu);
+            profile.save().then(profile=>res.json(profile));
+        });
+    });
+
+
 
 
 
