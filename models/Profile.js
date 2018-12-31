@@ -13,7 +13,8 @@ const ProfileSchema = new Schema({
         max: 40
     },
     company:{
-        type: String
+        type: String,
+        text: true
     },
     website:{
         type: String
@@ -27,7 +28,8 @@ const ProfileSchema = new Schema({
     },
     skills:{
         type: [String],
-        required:true
+        required:true,
+        text: true
     },
     bio:{
         type:String
@@ -67,7 +69,7 @@ const ProfileSchema = new Schema({
     education: [
         {
             school: {
-                type:String, 
+                type:String,
                 required: true
             },
             degree: {
@@ -117,4 +119,5 @@ const ProfileSchema = new Schema({
     }
 
 });
+
 module.exports = Profile= mongoose.model('profile',ProfileSchema);

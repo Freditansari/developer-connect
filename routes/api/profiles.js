@@ -127,7 +127,13 @@ router.post('/',  passport.authenticate('jwt', {session: false}), (req, res)=>{
 
     //skill split into array (CSV SPLIT)
     if(typeof req.body.skills!== "undefined"){
-        profileFields.skills = req.body.skills.split(',');
+        let skills = req.body.skills.split(',');
+        let trimmedSkills = [];
+        skills.map(skill => {trimmedSkills.push(skill.trim()); });
+
+    
+        
+        profileFields.skills = trimmedSkills;
     }
 
 
@@ -226,12 +232,21 @@ router.post('/',  passport.authenticate('jwt', {session: false}), (req, res)=>{
             profile.education.unshift(newEdu);
             profile.save().then(profile=>res.json(profile));
         });
+
+        //  Profile.find({$or:[{$text:{$search:'html'}}]})       
+        // .then(profile => {
+        //    console.log(profile);
+        //    res.json(profile);
+        // }).catch(err => console.log(err));
     });
 
-
-
-
-
+    router.post('/search', (req, res) =>{
+         Profile.find({skills:req.body.search})       
+        .then(profile => {
+           console.log(profile);
+           res.json(profile);
+        }).catch(err => console.log(err));
+    });
 
 
 
