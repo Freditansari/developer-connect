@@ -133,7 +133,7 @@ router.post('/login', (req, res)=>{
                 return res.status(400).json(errors);
             }
         });
-    })
+    }).catch(err=> res.status(400).json(err))
 
 
 });
