@@ -7,23 +7,23 @@ import Login from "./components/auth/Login";
 
 //redux component
 import { Provider } from "react-redux";
-import store from './store';
+import store from "./store";
 
-import jwt_decode from 'jwt-decode';
-import setAuthToken from './utils/setAuthToken';
-import  { setCurrentUser} from './actions/authActions'
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser } from "./actions/authActions";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
-//check for token 
+//check for token
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   const decoded = jwt_decode(localStorage.jwtToken);
+  let expireDate = new Date(decoded.exp*1000) ; 
+  console.log(expireDate.toTimeString());
 
   store.dispatch(setCurrentUser(decoded));
-  
-  
 }
 
 // const store = createStore(()=>[], {}, applyMiddleware());

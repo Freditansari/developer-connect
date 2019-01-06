@@ -4,14 +4,21 @@ img {
 
 .landing {
   position: relative;
-  background: url('./img/laptop.jpg') no-repeat;
-
+  background: url("./img/laptop.jpg") no-repeat;
   background-size: cover;
   background-position: center;
   height: 100vh;
   margin-top: -24px;
   margin-bottom: -50px;
 }
+
+/* .react-player {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+} */
 
 .landing-inner {
   padding-top: 80px;
