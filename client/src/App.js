@@ -11,7 +11,7 @@ import store from "./store";
 
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser } from "./actions/authActions";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
@@ -20,10 +20,26 @@ import "./App.css";
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   const decoded = jwt_decode(localStorage.jwtToken);
-  let expireDate = new Date(decoded.exp*1000) ; 
-  console.log(expireDate.toTimeString());
 
   store.dispatch(setCurrentUser(decoded));
+
+  //checking for expired token.
+  const currentTime = Date.now()/1000;
+  if(decoded.exp < currentTime){
+    store.dispatch(logoutUser());
+
+    /*todo : clear current profile*/
+
+    //redirect to login 
+    window.location.href='/login';
+
+
+  }
+
+
+  
+ 
+
 }
 
 // const store = createStore(()=>[], {}, applyMiddleware());
