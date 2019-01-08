@@ -20,7 +20,8 @@ class Login extends Component {
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.history("/dashboard");
+      // this.props.history("/dashboard");
+      window.location.href='/dashboard'
     }
   }
 

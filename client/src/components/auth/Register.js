@@ -34,7 +34,8 @@ class Register extends Component {
     //if the state is authenticated then go to /dashboard
 
     if (this.props.auth.isAuthenticated) {
-      this.props.history("/dashboard");
+      // this.props.history("/dashboard");
+      window.location.href='/dashboard'
     }
   }
 

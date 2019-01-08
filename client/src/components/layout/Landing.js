@@ -10,6 +10,7 @@ import {connect} from 'react-redux';
 class Landing extends Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
+      window.location.href='/dashboard';
        // this.props.history("/dashboard");
     }
   }

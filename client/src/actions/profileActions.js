@@ -1,8 +1,14 @@
 import Axios from "axios";
-import { GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS } from "./types";
+import {
+  GET_PROFILE,
+  PROFILE_LOADING,
+  CLEAR_CURRENT_PROFILE,
+  GET_ERRORS
+} from "./types";
 
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
+
   Axios.get("/api/profile")
     .then(res => dispatch({ type: GET_PROFILE, payload: res.data }))
     .catch(err => {
@@ -17,10 +23,9 @@ export const setProfileLoading = () => {
   };
 };
 
-
-//clear profile 
+//clear profile
 export const clearCurrentProfile = () => {
-    return {
-      type: CLEAR_CURRENT_PROFILE
-    };
+  return {
+    type: CLEAR_CURRENT_PROFILE
   };
+};

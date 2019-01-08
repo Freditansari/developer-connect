@@ -16,7 +16,7 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
-import { clearCurrentProfile } from "./actions/profileActions";
+import { clearCurrentProfile, phunyabo, setProfileLoading } from "./actions/profileActions";
 
 //check for token
 if (localStorage.jwtToken) {
@@ -24,6 +24,7 @@ if (localStorage.jwtToken) {
   const decoded = jwt_decode(localStorage.jwtToken);
 
   store.dispatch(setCurrentUser(decoded));
+  
 
   //checking for expired token.
   const currentTime = Date.now()/1000;
