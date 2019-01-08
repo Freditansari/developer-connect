@@ -16,7 +16,7 @@ SETUP REDUX:
 const store = createStore(()=>[], {}, applyMiddleware());
 export default store;
 
-5. import think and apply middleware.
+5. import thunk and apply middleware.
    import thunk from 'redux-thunk';
    const store = createStore(()=>[], {}, applyMiddleware(...middleware));
 

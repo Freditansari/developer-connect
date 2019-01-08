@@ -5,15 +5,17 @@
 
 import React, { Component } from "react";
 // import Axios from "axios";
-import classnames from "classnames";
+// import classnames from "classnames";
 
 import PropTypes from "prop-types";
 
-import {withRouter} from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 
 //redux compnents
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
+
+import TextFieldGroup from "../../common/TextFieldGroup";
 
 class Register extends Component {
   constructor() {
@@ -29,14 +31,16 @@ class Register extends Component {
     // this.onSubmit = this.onSubmit.bind(this);
   }
   componentDidMount() {
+    //if the state is authenticated then go to /dashboard
+
     if (this.props.auth.isAuthenticated) {
       this.props.history("/dashboard");
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.errors){
-      this.setState({errors: nextProps.errors});
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
     }
   }
 
@@ -55,19 +59,14 @@ class Register extends Component {
     };
 
     this.props.registerUser(newUser, this.props.history);
-    // Axios.post("/api/user/register", newUser)
-    //   .then(res => console.log(res.data))
-    //   .catch(err => this.setState({ errors: err.response.data }));
   };
 
   render() {
     const { errors } = this.state;
 
-    
     return (
       <div>
         <div className="register">
-         
           <div className="container">
             <div className="row">
               <div className="col-md-8 m-auto">
@@ -76,15 +75,19 @@ class Register extends Component {
                   Create your DevConnector account
                 </p>
                 <form onSubmit={this.onSubmit}>
-                  <div className="form-group">
+                  <TextFieldGroup
+                    placeholder="enter name here"
+                    name="name"
+                    type="text"
+                    onChange={this.onChange}
+                    value={this.state.name}
+                    error={errors.name}
+                  />
+                  {/* { <div className="form-group">
                     <input
-                      type="text"
-                      /**
-                       * classname will have the default "form-control form-control-lg".
-                       * if there is an error in error state, then is-invalid will be lit up.
-                       * is-invalid is a bootstrap classname. look at bootstrap.com for more info
-                       */
-                      className={classnames("form-control form-control-lg", {
+                      type="text" */}
+
+                  {/* className={classnames("form-control form-control-lg", {
                         "is-invalid": errors.name
                       })}
                       placeholder="Name"
@@ -96,8 +99,23 @@ class Register extends Component {
                     {errors.name && (
                       <div className="invalid-feedback"> {errors.name}</div>
                     )}
-                  </div>
-                  <div className="form-group">
+                  </div> */}
+                  <TextFieldGroup
+                    placeholder="enter an email address"
+                    name="email"
+                    type="email"
+                    onChange={this.onChange}
+                    value={this.state.email}
+                    error={errors.email}
+                    info="This site uses Gravatar so if you want a profile image, use
+                    a Gravatar email"
+                  />
+                  {/* <small className="form-text text-muted">
+                    This site uses Gravatar so if you want a profile image, use
+                    a Gravatar email
+                  </small> */}
+
+                  {/* <div className="form-group">
                     <input
                       type="email"
                       className={classnames("form-control form-control-lg", {
@@ -115,8 +133,17 @@ class Register extends Component {
                       This site uses Gravatar so if you want a profile image,
                       use a Gravatar email
                     </small>
-                  </div>
-                  <div className="form-group">
+                  </div> */}
+
+                  <TextFieldGroup
+                    placeholder="Enter password here"
+                    name="password"
+                    type="password"
+                    onChange={this.onChange}
+                    value={this.state.password}
+                    error={errors.password}
+                  />
+                  {/* <div className="form-group">
                     <input
                       type="password"
                       className={classnames("form-control form-control-lg", {
@@ -130,8 +157,17 @@ class Register extends Component {
                     {errors.password && (
                       <div className="invalid-feedback"> {errors.password}</div>
                     )}
-                  </div>
-                  <div className="form-group">
+                  </div> */}
+
+                  <TextFieldGroup
+                    placeholder="Enter password here"
+                    name="password2"
+                    type="password"
+                    onChange={this.onChange}
+                    value={this.state.password2}
+                    error={errors.password2}
+                  />
+                  {/* <div className="form-group">
                     <input
                       type="password"
                       className={classnames("form-control form-control-lg", {
@@ -148,7 +184,7 @@ class Register extends Component {
                         {errors.password2}
                       </div>
                     )}
-                  </div>
+                  </div> */}
                   <input
                     type="submit"
                     className="btn btn-info btn-block mt-4"

@@ -2,11 +2,17 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 //bring in redux
+//step 1
 import {PropTypes} from 'prop-types';
 import {connect} from 'react-redux';
 
 
 class Landing extends Component {
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+       // this.props.history("/dashboard");
+    }
+  }
   render() {
     return (
       <div className="landing">
@@ -37,6 +43,7 @@ class Landing extends Component {
   }
 }
 
+//step 2:
 Landing.PropTypes={
   auth: PropTypes.object.isRequired
 }
