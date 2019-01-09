@@ -12,8 +12,22 @@ class Dashboard extends Component {
 
 
   render() {
+
+    const {user} = this.props.auth;
+    const {profile } = this.props.profile;
+
+    let dashboardContent;
+
+    if (profile === null || loading) {
+      dashboardContent = <h4> loading..</h4>
+      
+    } else {
+      dashboardContent =<h1> HELLO THERE</h1>
+    }
     return <div >
-     <h1>welcome to Dashboard</h1>
+      <div className= 'container'>
+        
+      </div>
     </div>;
   }
 }
