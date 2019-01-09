@@ -3,20 +3,31 @@ import { Link } from "react-router-dom";
 
 //bring in redux
 //step 1
-import {PropTypes} from 'prop-types';
-import {connect} from 'react-redux';
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
 
+import videoSrc from "../../img/meeting.mp4";
 
 class Landing extends Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      window.location.href='/dashboard';
-       // this.props.history("/dashboard");
+      window.location.href = "/dashboard";
+      // this.props.history("/dashboard");
     }
   }
   render() {
     return (
       <div className="landing">
+        <div className="video-container">
+          <video
+            autoPlay
+            loop
+            className="landingVideo dark-overlay landing-inner text-light"
+          >
+            <source src={videoSrc} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
         <div className="dark-overlay landing-inner text-light">
           <div className="container">
             <div className="row">
@@ -45,12 +56,12 @@ class Landing extends Component {
 }
 
 //step 2:
-Landing.PropTypes={
+Landing.PropTypes = {
   auth: PropTypes.object.isRequired
-}
+};
 
-const mapStateToProps= (state) => ({
-  auth : state.auth
-})
+const mapStateToProps = state => ({
+  auth: state.auth
+});
 
-export default connect(mapStateToProps)(Landing) ;
+export default connect(mapStateToProps)(Landing);

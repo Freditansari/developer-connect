@@ -14,9 +14,14 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import { clearCurrentProfile, phunyabo, setProfileLoading } from "./actions/profileActions";
+import {
+  clearCurrentProfile,
+  setProfileLoading
+} from "./actions/profileActions";
+
+import PrivateRoute from "./common/privateRoute";
 
 //check for token
 if (localStorage.jwtToken) {
@@ -24,27 +29,18 @@ if (localStorage.jwtToken) {
   const decoded = jwt_decode(localStorage.jwtToken);
 
   store.dispatch(setCurrentUser(decoded));
-  
 
   //checking for expired token.
-  const currentTime = Date.now()/1000;
-  if(decoded.exp < currentTime){
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
     store.dispatch(logoutUser());
 
     /*todo : clear current profile*/
     store.dispatch(clearCurrentProfile());
 
-
-    //redirect to login 
-    window.location.href='/login';
-
-
+    //redirect to login
+    window.location.href = "/login";
   }
-
-
-  
- 
-
 }
 
 // const store = createStore(()=>[], {}, applyMiddleware());
@@ -60,7 +56,13 @@ class App extends Component {
             <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/dashboard" component={Dashboard} />
+
+
+              {/* example of private route component */}
+              <Switch>
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              </Switch>
+              {/* example of private route component */}
             </div>
             <Footer />
           </div>
