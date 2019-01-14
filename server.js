@@ -1,6 +1,7 @@
 const express = require ('express');
 const app = express();
 const mongoose = require ('mongoose');
+const path = require('path');
 
 const users = require('./routes/api/users');
 const profiles = require('./routes/api/profiles');
@@ -30,6 +31,11 @@ require('./config/passport')(passport);
 app.use('/api/user', users);
 app.use('/api/profile', profiles);
 app.use('/api/post', posts);
+
+if(process.env.NODE_ENV === 'production'){
+    app.user(express.static('client/build'));
+    app.get('*', (req, res) =>{ res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'))})
+}
 
 
 const port = process.env.PORT||5000;
