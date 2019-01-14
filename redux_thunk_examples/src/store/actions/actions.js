@@ -21,7 +21,7 @@ export const changeName = newName => dispatch => {
   axios
     .get("https://jsonplaceholder.typicode.com/users")
     .then(res => {
-      dispatch(changeNameAsync(res.data))
+      dispatch(changeNameAsync(res.data));
     })
     .catch(err => console.log(err));
 };
@@ -32,4 +32,14 @@ export const changeNameAsync = val => {
 
 export const ageDown = val => {
   return { type: "AGE_DOWN", value: val };
+};
+
+export const sendName = newName => dispatch => {
+  console.log(newName);
+  axios
+    .post("https://demo-node-2019.herokuapp.com/api/testPost", newName)
+    .then(res => {
+      dispatch(changeNameAsync(newName));
+      console.log(res.data);
+    }).catch(err=>{console.log(err)});
 };

@@ -1,7 +1,8 @@
 const initialState = {
   age: 20,
   potato: true,
-  name: ''
+  name: '',
+  address:''
 };
 
 const reducer = (state = initialState, action) => {
@@ -17,7 +18,8 @@ const reducer = (state = initialState, action) => {
       newState.age -= action.value;
       break;
     case "CHANGE_NAME":
-      newState.name = action.value;
+      newState.name = action.value.name;
+      newState.address = action.value.address;
       break;
     case "LOADING":
       newState.loading = true;

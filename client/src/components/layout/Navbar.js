@@ -21,8 +21,8 @@ class Navbar extends Component {
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
           {/* <a className="nav-link" href="login.html">Login</a> */}
-          <a
-            href=""
+          <Link
+            to='/'
             onClick={this.onLogoutClick.bind(this)}
             className="nav-link"
           >
@@ -34,7 +34,7 @@ class Navbar extends Component {
               style={{ width: "25px", marginRight: "5px" }}
             />
             Logout
-          </a>
+          </Link>
         </li>
       </ul>
     );
