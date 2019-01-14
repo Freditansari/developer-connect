@@ -22,6 +22,7 @@ class Landing extends Component {
           <video
             autoPlay
             loop
+            muted
             className="landingVideo dark-overlay landing-inner text-light"
           >
             <source src={videoSrc} type="video/mp4" />
