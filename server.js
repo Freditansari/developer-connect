@@ -33,7 +33,7 @@ app.use('/api/profile', profiles);
 app.use('/api/post', posts);
 
 if(process.env.NODE_ENV === 'production'){
-    app.user(express.static('client/build'));
+    app.use(express.static('client/build'));
     app.get('*', (req, res) =>{ res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'))})
 }
 
