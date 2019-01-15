@@ -15,7 +15,11 @@ class Landing extends Component {
       // this.props.history("/dashboard");
     }
   }
+
+ 
   render() {
+    const demoText = 'Bacon ipsum dolor amit ham salami'
+    const LandingText=`Lorem impsum dolor amit, ${demoText}`;
     return (
       <div className="landing">
         <div className="video-container">
@@ -37,6 +41,7 @@ class Landing extends Component {
 
                 <p className="lead">
                   {" "}
+                 
                   Create a developer profile/portfolio, share posts and get help
                   from other developers
                 </p>
