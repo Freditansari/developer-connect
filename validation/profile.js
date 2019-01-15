@@ -33,22 +33,22 @@ module.exports = function validateProfileInput(data) {
     }
   }
   if (!isEmpty(data.youtube)) {
-    if (validator.isURL(data.youtube)) {
+    if (!validator.isURL(data.youtube)) {
       errors.youtube = "not a valid url";
     }
   }
   if (!isEmpty(data.twitter)) {
-    if (validator.isURL(data.twitter)) {
+    if (!validator.isURL(data.twitter)) {
       errors.twitter = "not a valid url";
     }
   }
   if (!isEmpty(data.instagram)) {
-    if (validator.isURL(data.instagram)) {
+    if (!validator.isURL(data.instagram)) {
       errors.instagram = "not a valid url";
     }
   }
   if (!isEmpty(data.facebook)) {
-    if (validator.isURL(data.facebook)) {
+    if (!validator.isURL(data.facebook)) {
       errors.facebook = "not a valid url";
     }
   }

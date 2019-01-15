@@ -20,7 +20,7 @@ export const getCurrentProfile = () => dispatch => {
 
 
 export const deleteAccount = () => dispatch => {
-  if(window.confirm('are you sure? this cannot be undones!')){
+  if(window.confirm('are you sure? this cannot be undone!')){
     Axios.delete('/api/profile')
     .then(dispatch({
       type: SET_CURRENT_USER,
