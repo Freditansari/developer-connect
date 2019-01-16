@@ -60,7 +60,7 @@ class Navbar extends Component {
         <div className="container">
           {/* <a className="navbar-brand" href="landing.html">DevConnector</a> */}
           <Link className="navbar-brand" to="/">
-            DevConnector
+            DevHubs
           </Link>
           <button
             className="navbar-toggler"
