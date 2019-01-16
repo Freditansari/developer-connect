@@ -16,7 +16,7 @@ module.exports = function validateExperienceInput(data) {
   }
 
   if (validator.isEmpty(data.company)) {
-    errors.password = "company field is required";
+    errors.company = "company field is required";
   }
   if (validator.isEmpty(data.from)) {
     errors.from = "from date field is required";

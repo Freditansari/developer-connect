@@ -18,8 +18,17 @@ export const getCurrentProfile = () => dispatch => {
     });
 };
 
-export const addExperience = (expData, history) => dispatch => {
-  Axios.post("api/profile/expeirence", expData).then(res =>
+export const addExperience = (eduData, history) => dispatch => {
+  Axios.post("api/profile/experience", eduData).then(res =>
+    history.push("/dashboard")
+  ).catch(err => dispatch({
+    type: GET_ERRORS,
+    payload: err.response.data
+  }));
+};
+
+export const addEducation = (eduData, history) => dispatch => {
+  Axios.post("api/profile/education", eduData).then(res =>
     history.push("/dashboard")
   ).catch(err => dispatch({
     type: GET_ERRORS,

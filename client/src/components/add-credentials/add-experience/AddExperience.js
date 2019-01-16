@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import TextAreaFieldGroup from "../../../common/textAreaFieldGroup";
 
-import {addExperience} from '../../../actions/profileActions'
+import { addExperience } from "../../../actions/profileActions";
 
 class AddExperience extends Component {
   constructor(props) {
@@ -27,27 +27,32 @@ class AddExperience extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onCheck = e =>{
-      this.setState({
-        disabled : !this.state.disabled,
-        current: ! this.state.current
-    })
+  onCheck = e => {
+    this.setState({
+      disabled: !this.state.disabled,
+      current: !this.state.current
+    });
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
   }
 
-  onSubmit = e =>{
-      e.preventDefault();
-      const expData = { 
-        company: this.state.company, 
-        title: this.state.title,
-        location: this.state.location, 
-        from : this.state.from, 
-        to: this.state.to,
-        current: this.state.current,
-        description: this.state.description
-
-      };
-      this.props.addExperience(expData, this.props.history);
-  }
+  onSubmit = e => {
+    e.preventDefault();
+    const expData = {
+      company: this.state.company,
+      title: this.state.title,
+      location: this.state.location,
+      from: this.state.from,
+      to: this.state.to,
+      current: this.state.current,
+      description: this.state.description
+    };
+    this.props.addExperience(expData, this.props.history);
+  };
 
   render() {
     const { errors } = this.state;
@@ -76,15 +81,22 @@ class AddExperience extends Component {
                 />
                 <TextFieldGroup
                   placeholder="* Job Title"
-                  name="jobTitle"
-                  value={this.state.jobTitle}
+                  name="title"
+                  value={this.state.title}
                   onChange={this.onChange}
-                  error={errors.jobTitle}
+                  error={errors.title}
+                />
+                <TextFieldGroup
+                  placeholder="* Location"
+                  name="location"
+                  value={this.state.location}
+                  onChange={this.onChange}
+                  error={errors.location}
                 />
                 <h6>From Date</h6>
                 <TextFieldGroup
                   placeholder="From Date"
-                  name="fromDate"
+                  name="from"
                   type="date"
                   value={this.state.from}
                   onChange={this.onChange}
@@ -93,7 +105,7 @@ class AddExperience extends Component {
                 <h6>To Date</h6>
                 <TextFieldGroup
                   placeholder="To Date"
-                  name="toDate"
+                  name="to"
                   type="date"
                   value={this.state.to}
                   onChange={this.onChange}
@@ -123,7 +135,11 @@ class AddExperience extends Component {
                   info="tell us about the position"
                 />
 
-                <input type="submit" value="Submit" className="btn btn-info btn-block mt4"/>
+                <input
+                  type="submit"
+                  value="Submit"
+                  className="btn btn-info btn-block mt4"
+                />
               </form>
             </div>
           </div>
@@ -133,8 +149,7 @@ class AddExperience extends Component {
   }
 }
 AddExperience.propTypes = {
-
-  addExperience : PropTypes.func.isRequired,
+  addExperience: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -144,4 +159,7 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, {addExperience})(withRouter(AddExperience));
+export default connect(
+  mapStateToProps,
+  { addExperience }
+)(withRouter(AddExperience));
